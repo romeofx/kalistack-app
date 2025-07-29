@@ -1,26 +1,34 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-import sqlite3
 import os
+import sqlite3
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from dotenv import load_dotenv
+
+# Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv('FLASK_SECRET_KEY', 'your_default_secret_key')
+app.secret_key = os.getenv('FLASK_SECRET_KEY')  # Load secret key from .env
 
-DB_NAME = 'kalistack_users.db'
+DATABASE = 'Kalistack.db'
 
+# Function to connect to the database
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+# Initialize database if it doesn't exist
 def init_db():
-    conn = sqlite3.connect(DB_NAME)
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
+    if not os.path.exists(DATABASE):
+        with get_db_connection() as conn:
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL UNIQUE,
+                    password TEXT NOT NULL
+                )
+            ''')
+            conn.commit()
 
 @app.route('/')
 def index():
@@ -29,49 +37,63 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if not username or not password:
+            flash('All fields are required.', 'danger')
+            return redirect(url_for('register'))
+
         try:
-            conn = sqlite3.connect(DB_NAME)
-            c = conn.cursor()
-            c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-            conn.commit()
-            conn.close()
-            flash('Registration successful! Please log in.')
+            with get_db_connection() as conn:
+                conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+                conn.commit()
+            flash('Registration successful. Please log in.', 'success')
             return redirect(url_for('login'))
         except sqlite3.IntegrityError:
-            flash('Username already exists.')
+            flash('Username already exists.', 'warning')
+            return redirect(url_for('register'))
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        conn = sqlite3.connect(DB_NAME)
-        c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-        user = c.fetchone()
-        conn.close()
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        with get_db_connection() as conn:
+            user = conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password)).fetchone()
+
         if user:
-            session['username'] = username
+            session['user'] = username
+            flash('Login successful.', 'success')
             return redirect(url_for('dashboard'))
         else:
-            flash('Invalid username or password.')
+            flash('Invalid username or password.', 'danger')
+            return redirect(url_for('login'))
     return render_template('login.html')
 
 @app.route('/dashboard')
 def dashboard():
-    if 'username' in session:
-        return render_template('dashboard.html', username=session['username'])
-    flash('Please log in to access the dashboard.')
-    return redirect(url_for('login'))
+    if 'user' in session:
+        return render_template('dashboard.html', user=session['user'])
+    else:
+        flash('Please log in to continue.', 'warning')
+        return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
-    flash('You have been logged out.')
-    return redirect(url_for('login'))
+    session.pop('user', None)
+    flash('Logged out successfully.', 'info')
+    return redirect(url_for('index'))
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 if __name__ == '__main__':
     init_db()
