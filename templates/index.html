@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalistack - AI Solutions</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav>
+        <h1>Kalistack</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/login">Login</a></li>
+        </ul>
+        <button id="toggleTheme">Toggle Dark/Light</button>
+    </nav>
+    <main>
+        <h2>Welcome to Kalistack</h2>
+        <p>Your AI-powered solution stack for startups, students, and businesses.</p>
+    </main>
+    <footer>&copy; 2025 Kalistack. All rights reserved.</footer>
+    <script>
+        document.getElementById('toggleTheme').onclick = () => {
+            const html = document.documentElement;
+            const theme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', theme);
+        }
+    </script>
+</body>
+</html>
