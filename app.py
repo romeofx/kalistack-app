@@ -2,22 +2,24 @@ import os
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash, check_password_hash
 
-# Load environment variables from .env file
+# Load environment variables from .env
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv('FLASK_SECRET_KEY')  # Load secret key from .env
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
-DATABASE = 'Kalistack.db'
+# Load DB path from .env
+DATABASE = os.getenv('DATABASE_URL').replace("sqlite:///", "")
 
-# Function to connect to the database
+# Connect to DB
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
-# Initialize database if it doesn't exist
+# Initialize the DB
 def init_db():
     if not os.path.exists(DATABASE):
         with get_db_connection() as conn:
@@ -37,16 +39,18 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form.get('username')
+        username = request.form.get('username').strip()
         password = request.form.get('password')
 
         if not username or not password:
             flash('All fields are required.', 'danger')
             return redirect(url_for('register'))
 
+        hashed_password = generate_password_hash(password)
+
         try:
             with get_db_connection() as conn:
-                conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+                conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
                 conn.commit()
             flash('Registration successful. Please log in.', 'success')
             return redirect(url_for('login'))
@@ -58,13 +62,13 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
+        username = request.form.get('username').strip()
         password = request.form.get('password')
 
         with get_db_connection() as conn:
-            user = conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password)).fetchone()
+            user = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
 
-        if user:
+        if user and check_password_hash(user['password'], password):
             session['user'] = username
             flash('Login successful.', 'success')
             return redirect(url_for('dashboard'))
