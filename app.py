@@ -39,43 +39,55 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form.get('username').strip()
-        password = request.form.get('password')
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
 
-        if not username or not password:
-            flash('All fields are required.', 'danger')
-            return redirect(url_for('register'))
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
 
-        hashed_password = generate_password_hash(password)
+        cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+        if cursor.fetchone():
+            flash('Username already exists. Choose another one.', 'danger')
+            return redirect('/register')
 
-        try:
-            with get_db_connection() as conn:
-                conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
-                conn.commit()
-            flash('Registration successful. Please log in.', 'success')
-            return redirect(url_for('login'))
-        except sqlite3.IntegrityError:
-            flash('Username already exists.', 'warning')
-            return redirect(url_for('register'))
+        cursor.execute('INSERT INTO users (firstname, lastname, username, email, password) VALUES (?, ?, ?, ?, ?)',
+                       (firstname, lastname, username, email, password))
+        conn.commit()
+        conn.close()
+        flash('Registration successful! Please login.', 'success')
+        return redirect('/login')
+
     return render_template('register.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username').strip()
-        password = request.form.get('password')
+        username = request.form['username']
+        password = request.form['password']
 
-        with get_db_connection() as conn:
-            user = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, password))
+        user = cursor.fetchone()
+        conn.close()
 
-        if user and check_password_hash(user['password'], password):
-            session['user'] = username
-            flash('Login successful.', 'success')
-            return redirect(url_for('dashboard'))
+        if user:
+            session['user'] = {
+                'id': user[0],
+                'firstname': user[1],
+                'lastname': user[2],
+                'username': user[3]
+            }
+            return redirect('/profile')
         else:
-            flash('Invalid username or password.', 'danger')
-            return redirect(url_for('login'))
+            flash('Invalid login credentials.', 'danger')
+
     return render_template('login.html')
+
 
 @app.route('/dashboard')
 def dashboard():
@@ -98,6 +110,13 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/profile')
+def profile():
+    if 'user' not in session:
+        return redirect('/login')
+    return render_template('profile.html', user=session['user'])
+
 
 if __name__ == '__main__':
     init_db()

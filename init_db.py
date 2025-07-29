@@ -7,11 +7,13 @@ c = conn.cursor()
 # Create users table
 c.execute('''
 CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
-)
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        firstname TEXT NOT NULL,
+        lastname TEXT NOT NULL,
+        username TEXT NOT NULL UNIQUE,
+        email TEXT NOT NULL,
+        password TEXT NOT NULL
+    )
 ''')
 
 # Commit and close
