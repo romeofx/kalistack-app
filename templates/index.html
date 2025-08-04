@@ -432,18 +432,13 @@
 
 
 <!-- Footer -->
- <footer class="footer">
+<footer class="footer">
   <div class="footer-container">
     <div class="footer-column">
       <h3>Kalistack</h3>
       <p>Your AI-powered solution stack for startups, students, and businesses.</p>
-      <div class="social-icons">
-        <a href="#"><i data-lucide="github"></i></a>
-        <a href="#"><i data-lucide="twitter"></i></a>
-        <a href="#"><i data-lucide="linkedin"></i></a>
-        <a href="#"><i data-lucide="mail"></i></a>
-      </div>
     </div>
+
     <div class="footer-column">
       <h4>Quick Links</h4>
       <ul>
@@ -452,6 +447,7 @@
         <li><a href="/contact">Contact</a></li>
       </ul>
     </div>
+
     <div class="footer-column">
       <h4>Services</h4>
       <ul>
@@ -460,6 +456,7 @@
         <li><a href="#">Support</a></li>
       </ul>
     </div>
+
     <div class="footer-column">
       <h4>Legal</h4>
       <ul>
@@ -469,19 +466,32 @@
       </ul>
     </div>
   </div>
+
+  <!-- Social Icons + Copyright -->
+  <div class="footer-social">
+    <div class="social-icons">
+      <a href="#"><i data-lucide="github"></i></a>
+      <a href="#"><i data-lucide="twitter"></i></a>
+      <a href="#"><i data-lucide="linkedin"></i></a>
+      <a href="#"><i data-lucide="mail"></i></a>
+    </div>
+    <div class="footer-bottom-text">
+      &copy; 2025 Kalistack | All Rights Reserved
+    </div>
+  </div>
 </footer>
 
 <style>
   .footer {
     background-color: #0b0b1a;
-    padding: 3rem 1.5rem;
+    padding: 3rem 1.5rem 2rem;
     color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
   }
 
   .footer-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -516,23 +526,40 @@
   }
 
   .footer a {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.85);
     transition: color 0.3s ease;
+    text-decoration: none;
   }
 
   .footer a:hover {
     color: #6366f1;
   }
 
+  .footer-social {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
+  .social-icons {
+    margin-bottom: 1rem;
+  }
+
   .social-icons a {
     display: inline-block;
-    margin-right: 0.5rem;
+    margin: 0 0.5rem;
     color: rgba(255, 255, 255, 0.6);
+    font-size: 1.25rem;
     transition: color 0.3s ease;
   }
 
   .social-icons a:hover {
     color: #6366f1;
+  }
+
+  .footer-bottom-text {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.75rem;
   }
 
   @media (max-width: 600px) {
@@ -541,11 +568,12 @@
       text-align: center;
     }
 
-    .social-icons {
+    .footer-social .social-icons {
       justify-content: center;
     }
   }
 </style>
+
 
   <!-- Script -->
   <script>
