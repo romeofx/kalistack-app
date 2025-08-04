@@ -27,13 +27,19 @@
       background-color: #0b0b1a;
       padding: 1rem 1.5rem;
       display: flex;
+      flex-wrap: wrap; /* ✅ Added for mobile */
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
     nav a {
-      margin: 0 0.75rem;
       font-weight: 500;
     }
 
@@ -66,12 +72,12 @@
     }
 
     .hero {
-      padding: 6rem 1.5rem;
+      padding: 4rem 1.5rem;
       background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(99, 102, 241, 0.05));
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 3rem;
+      gap: 2rem;
     }
 
     .hero-text {
@@ -157,6 +163,7 @@
       display: flex;
       justify-content: space-between;
       margin-top: 1rem;
+      flex-wrap: wrap;
     }
 
     .dashboard .stats div {
@@ -169,18 +176,18 @@
       height: 8rem;
       display: flex;
       align-items: flex-end;
-      justify-content: center;
-      gap: 0.5rem;
+      justify-content: space-around;
+      gap: 0.25rem;
     }
 
     .chart div {
-      width: 0.75rem;
+      width: 0.5rem;
       background-color: #818cf8;
       border-radius: 3px 3px 0 0;
     }
 
     .section {
-      padding: 6rem 1.5rem;
+      padding: 4rem 1.5rem;
       text-align: center;
     }
 
@@ -277,8 +284,22 @@
     .placeholder {
       color: rgba(255, 255, 255, 0.6);
     }
+
+    /* ✅ Additional responsive improvements */
+    @media (max-width: 768px) {
+      .hero-buttons a {
+        display: block;
+        margin-bottom: 1rem;
+        margin-right: 0;
+      }
+
+      .dashboard {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <!-- Navigation -->
@@ -526,6 +547,7 @@
   }
 </style>
 
+  <!-- Script -->
   <script>
     lucide.createIcons();
   </script>
