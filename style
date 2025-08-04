@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About - Kalistack</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Include your shared style here -->
-   <style>
+  <style>
     * {
       box-sizing: border-box;
     }
@@ -299,61 +290,3 @@
       }
     }
   </style>
-</head>
-<body>
-
-  <!-- Navigation -->
-  <header>
-    <h1>Kalistack</h1>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/contact.html">Contact</a>
-    </nav>
-    <div>
-      <a href="/login.html" class="btn btn-outline">Login</a>
-      <a href="/register.html" class="btn btn-primary">Register</a>
-    </div>
-  </header>
-
-  <!-- About Section -->
-  <section class="section">
-    <h2>About Kalistack</h2>
-    <p>
-      Kalistack is a modern AI-powered platform designed to empower individuals, startups, and teams by streamlining complex workflows across industries. Whether you're building apps, launching new products, writing content, or prototyping ideas — Kalistack equips you with the essential tools to accelerate with AI.
-    </p>
-
-    <div class="features-grid">
-      <div class="feature">
-        <h3><i data-lucide="zap"></i> Instant AI Access</h3>
-        <p class="placeholder">Launch advanced tools directly in your browser — no installs or setup required.</p>
-      </div>
-      <div class="feature">
-        <h3><i data-lucide="layers"></i> Modular Utilities</h3>
-        <p class="placeholder">Plug-and-play AI tools for writing, coding, design, health, and legal support.</p>
-      </div>
-      <div class="feature">
-        <h3><i data-lucide="shield-check"></i> Private & Secure</h3>
-        <p class="placeholder">We prioritize your data privacy with encryption and secure handling standards.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action -->
-  <section class="section get-started-box">
-    <h2>Start Exploring Kalistack</h2>
-    <p class="placeholder">Join thousands using AI to unlock smarter, faster work — without the complexity.</p>
-    <a href="/register.html" class="btn-primary">Get Started Free</a>
-    <a href="/contact.html" class="btn-secondary">Talk to Our Team</a>
-  </section>
-
-  <!-- Footer -->
-  <footer class="section" style="font-size: 0.875rem; color: rgba(255,255,255,0.6); padding-bottom: 2rem;">
-    &copy; 2025 Kalistack. All rights reserved.
-  </footer>
-
-  <script>
-    lucide.createIcons();
-  </script>
-</body>
-</html>
