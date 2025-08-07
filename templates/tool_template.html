@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ tool_name }} | Kalistack</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #007BFF;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .tool-container {
+            background: white;
+            color: black;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            max-width: 700px;
+            margin: auto;
+        }
+        nav a {
+            color: white !important;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-dark text-white py-3 mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h3 class="mb-0"><a href="/" class="text-white text-decoration-none">Kalistack</a></h3>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container py-3">
+        <div class="tool-container">
+            <h1>{{ tool_name | title }}</h1>
+            <p>{{ tool_description }}</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endwith %}
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="inputData" class="form-label">Your Input</label>
+                    <textarea name="inputData" id="inputData" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Launch {{ tool_name }}</button>
+            </form>
+
+            {% if output %}
+            <hr>
+            <h5>Output</h5>
+            <div class="bg-light p-3 rounded">
+                <pre class="mb-0">{{ output }}</pre>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

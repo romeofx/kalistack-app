@@ -1,14 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Profile - Kalistack</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kalistack - Profile</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+  <style>
+    body {
+      background-color: #0d6efd;
+      color: white;
+    }
+    header {
+      background-color: #003399;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    nav a {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+    }
+    .btn-outline, .btn-primary {
+      margin-left: 10px;
+    }
+    .profile-container {
+      background-color: #ffffff10;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-top: 2rem;
+    }
+    .card {
+      background-color: #ffffff10;
+      border: none;
+      margin-bottom: 1rem;
+    }
+    .card h5 {
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2>Welcome, {{ user.firstname }} {{ user.lastname }}</h2>
-    <p>Your username is <strong>{{ user.username }}</strong></p>
+
+<header>
+  <h1>Kalistack</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+  <div>
+    <a href="/logout" class="btn btn-outline-light">Logout</a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="profile-container mx-auto col-md-8">
+    <h2 class="mb-4 text-center">User Profile</h2>
+
+    <!-- User Info -->
+    <div class="card p-3">
+      <h5>User Info</h5>
+      <p><strong>Name:</strong> {{ profile.name }}</p>
+      <p><strong>Email:</strong> {{ profile.email }}</p>
+      <a href="#" class="btn btn-sm btn-outline-light">Edit Profile</a>
+    </div>
+
+    <!-- Account Summary -->
+    <div class="card p-3">
+      <h5>Account Summary</h5>
+      <p><strong>Plan:</strong> {{ profile.plan or 'Free Tier' }}</p>
+      <p><strong>Usage:</strong> {{ profile.tools_used }}/10 tools used this week</p>
+      <p><strong>Last Login:</strong> {{ profile.last_login or "Unknown" }}</p>
+      <a href="#" class="btn btn-sm btn-light">Upgrade Plan</a>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card p-3">
+      <h5>Recent Activity</h5>
+      <ul class="list-unstyled">
+        <li>✅ Used AI Writer – Aug 3</li>
+        <li>✅ Accessed Legal Assistant – Aug 1</li>
+        <li>✅ Viewed Dashboard – Jul 30</li>
+      </ul>
+    </div>
+
+    <!-- Security Settings -->
+    <div class="card p-3">
+      <h5>Security & Settings</h5>
+      <a href="#" class="btn btn-sm btn-outline-light mb-2">Change Password</a><br/>
+      <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="card p-3 text-center">
+      <h5>Explore Kalistack</h5>
+      <a href="/dashboard" class="btn btn-primary btn-lg">Go to Dashboard</a>
+    </div>
+
+  </div>
 </div>
+
 </body>
 </html>

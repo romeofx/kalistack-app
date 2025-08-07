@@ -290,3 +290,16 @@
       }
     }
   </style>
+
+
+
+
+  Later, we can:
+
+Dynamically show user data using Flask variables (e.g., {{ user.name }})
+
+Load activity logs from the database
+
+Add avatars and preferences
+
+Would you like to proceed with the dashboard.html or a tool launch page template next?

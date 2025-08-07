@@ -1,15 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard - Kalistack</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Kalistack Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    header {
+      background-color: #0056b3;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      color: white;
+    }
+
+    nav a {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-outline {
+      border: 1px solid white;
+      color: white;
+      margin-right: 10px;
+    }
+
+    .btn-outline:hover {
+      background-color: white;
+      color: #0056b3;
+    }
+
+    .btn-primary {
+      background-color: white;
+      color: #0056b3;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #e6e6e6;
+      color: #003f7f;
+    }
+
+    .card {
+      color: black;
+    }
+
+    .dashboard {
+      padding: 2rem;
+    }
+
+    .card-title {
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <div class="container mt-5 text-center">
-        <h1>Welcome, {{ username }}!</h1>
-        <p>This is your Kalistack dashboard.</p>
-        <a href="/logout" class="btn btn-danger">Logout</a>
+  <header>
+    <h1>Kalistack</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div>
+      <a href="/login" class="btn btn-outline">Login</a>
+      <a href="/register" class="btn btn-primary">Register</a>
     </div>
+  </header>
+
+  <div class="container dashboard text-center">
+    <h2>Welcome to Your Dashboard, {{ username }}</h2>
+    <p class="mb-5">Explore Kalistack's AI-powered tools</p>
+
+    <div class="row g-4 justify-content-center">
+
+      <!-- Tool 1: AI Writer -->
+      <div class="col-md-4">
+        <div class="card p-3 h-100">
+          <h5 class="card-title">AI Writer</h5>
+          <p class="card-text">Create high-quality content effortlessly.</p>
+          <a href="/tools/ai-writer" class="btn btn-primary">Launch</a>
+        </div>
+      </div>
+
+      <!-- Tool 2: Code Assistant -->
+      <div class="col-md-4">
+        <div class="card p-3 h-100">
+          <h5 class="card-title">Code Assistant</h5>
+          <p class="card-text">Write, debug, and generate code using AI.</p>
+          <a href="/tools/code-assistant" class="btn btn-primary">Launch</a>
+        </div>
+      </div>
+
+      <!-- Tool 3: Design Studio -->
+      <div class="col-md-4">
+        <div class="card p-3 h-100">
+          <h5 class="card-title">Design Studio</h5>
+          <p class="card-text">Quickly prototype your app and UI designs.</p>
+          <a href="/tools/design-studio" class="btn btn-primary">Launch</a>
+        </div>
+      </div>
+
+      <!-- Tool 4: Legal Helper -->
+      <div class="col-md-4">
+        <div class="card p-3 h-100">
+          <h5 class="card-title">Legal Helper</h5>
+          <p class="card-text">Get legal templates and AI insights on policies.</p>
+          <a href="/tools/legal-helper" class="btn btn-primary">Launch</a>
+        </div>
+      </div>
+
+      <!-- Tool 5: Health Bot -->
+      <div class="col-md-4">
+        <div class="card p-3 h-100">
+          <h5 class="card-title">Health Bot</h5>
+          <p class="card-text">Ask health questions and get AI-powered tips.</p>
+          <a href="/tools/health-bot" class="btn btn-primary">Launch</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>
