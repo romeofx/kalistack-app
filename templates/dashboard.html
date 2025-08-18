@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Kalistack Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile-friendly -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #007BFF;
-      color: white;
+      background-color: #f9f9f9;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     header {
@@ -22,12 +24,22 @@
     header h1 {
       margin: 0;
       color: white;
+      font-weight: bold;
+    }
+
+    nav {
+      margin-top: 10px;
     }
 
     nav a {
       margin: 0 10px;
       color: white;
       text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
     }
 
     .btn-outline {
@@ -52,16 +64,35 @@
       color: #003f7f;
     }
 
-    .card {
-      color: black;
-    }
-
     .dashboard {
       padding: 2rem;
     }
 
+    .dashboard h2 {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 12px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
     .card-title {
       font-weight: bold;
+    }
+
+    footer {
+      background-color: #0056b3;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
     }
   </style>
 </head>
@@ -73,7 +104,7 @@
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
     </nav>
-    <div>
+    <div class="mt-2 mt-md-0">
       <a href="/login" class="btn btn-outline">Login</a>
       <a href="/register" class="btn btn-primary">Register</a>
     </div>
@@ -86,7 +117,7 @@
     <div class="row g-4 justify-content-center">
 
       <!-- Tool 1: AI Writer -->
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-6">
         <div class="card p-3 h-100">
           <h5 class="card-title">AI Writer</h5>
           <p class="card-text">Create high-quality content effortlessly.</p>
@@ -95,7 +126,7 @@
       </div>
 
       <!-- Tool 2: Code Assistant -->
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-6">
         <div class="card p-3 h-100">
           <h5 class="card-title">Code Assistant</h5>
           <p class="card-text">Write, debug, and generate code using AI.</p>
@@ -104,7 +135,7 @@
       </div>
 
       <!-- Tool 3: Design Studio -->
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-6">
         <div class="card p-3 h-100">
           <h5 class="card-title">Design Studio</h5>
           <p class="card-text">Quickly prototype your app and UI designs.</p>
@@ -113,7 +144,7 @@
       </div>
 
       <!-- Tool 4: Legal Helper -->
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-6">
         <div class="card p-3 h-100">
           <h5 class="card-title">Legal Helper</h5>
           <p class="card-text">Get legal templates and AI insights on policies.</p>
@@ -122,7 +153,7 @@
       </div>
 
       <!-- Tool 5: Health Bot -->
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-6">
         <div class="card p-3 h-100">
           <h5 class="card-title">Health Bot</h5>
           <p class="card-text">Ask health questions and get AI-powered tips.</p>
@@ -132,5 +163,9 @@
 
     </div>
   </div>
+
+  <footer>
+    <p>© 2025 Kalistack. All rights reserved.</p>
+  </footer>
 </body>
 </html>

@@ -3,47 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ tool_name }} | Kalistack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- ✅ makes mobile scale properly -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #007BFF;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
             color: white;
             font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
+        /* ✅ Tool container styling */
         .tool-container {
-            background: white;
-            color: black;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            max-width: 700px;
+            background: #ffffff;
+            color: #212529;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 850px;
             margin: auto;
+            width: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        nav a {
-            color: white !important;
-            margin-right: 15px;
+        .tool-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        textarea {
+            resize: none;
+        }
+        .typing-effect {
+            border-right: 2px solid #007BFF;
+            display: inline-block;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .copy-btn {
+            float: right;
+            font-size: 0.85rem;
+        }
+
+        /* ✅ Mobile responsiveness */
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1.25rem;
+                border-radius: 12px;
+                box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            p.fs-5 {
+                font-size: 1rem !important;
+            }
+            textarea {
+                font-size: 0.95rem;
+            }
+            button {
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header class="bg-dark text-white py-3 mb-4">
-        <div class="container d-flex justify-content-between align-items-center">
-            <h3 class="mb-0"><a href="/" class="text-white text-decoration-none">Kalistack</a></h3>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-                <a href="/dashboard">Dashboard</a>
-                <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
-            </nav>
+    <!-- ✅ Navbar -->
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container-fluid">
+          <!-- Brand -->
+          <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+            <img src="/static/logo.png" alt="Kalistack Logo" width="32" height="32" class="me-2 rounded">
+            <span>Kalistack</span>
+          </a>
+
+          <!-- Mobile Toggle -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Collapsible Nav -->
+          <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarNav">
+            <ul class="navbar-nav ms-auto text-center">
+              <li class="nav-item">
+                <a class="nav-link px-3" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link px-3" href="/about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link px-3" href="/contact">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link px-3" href="/dashboard">Dashboard</a>
+              </li>
+              <li class="nav-item mt-2 mt-lg-0">
+                <a href="/logout" class="btn btn-sm btn-danger px-4">Logout</a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </nav>
     </header>
 
-    <div class="container py-3">
+    <!-- ✅ Tool Section -->
+    <div class="container flex-grow-1 py-3">
         <div class="tool-container">
-            <h1>{{ tool_name | title }}</h1>
-            <p>{{ tool_description }}</p>
-
+            <div class="mb-4 text-center">
+                <h1 class="fw-bold text-primary">{{ tool_name | title }}</h1>
+                <p class="text-muted fs-5">{{ tool_description }}</p>
+            </div>
+        
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% for category, message in messages %}
                 <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
@@ -52,25 +135,81 @@
                 </div>
               {% endfor %}
             {% endwith %}
-
-            <form method="POST">
+        
+            <form method="POST" onsubmit="showLoading()" id="toolForm" class="mb-3">
                 <div class="mb-3">
-                    <label for="inputData" class="form-label">Your Input</label>
-                    <textarea name="inputData" id="inputData" class="form-control" rows="4" required></textarea>
+                    <label for="inputData" class="form-label fw-semibold">Your Input</label>
+                    <textarea name="inputData" id="inputData" 
+                              class="form-control border-2 shadow-sm" 
+                              rows="4" placeholder="Type here..." required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Launch {{ tool_name }}</button>
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+                    🚀 Launch {{ tool_name }}
+                </button>
             </form>
-
+        
+            <div id="loading" class="text-center mt-4" style="display:none;">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2">Generating response...</p>
+            </div>
+        
             {% if output %}
-            <hr>
-            <h5>Output</h5>
-            <div class="bg-light p-3 rounded">
-                <pre class="mb-0">{{ output }}</pre>
+            <hr class="my-4">
+            <h5 class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Output</span>
+                <button class="btn btn-outline-secondary btn-sm copy-btn" onclick="copyOutput()">📋 Copy</button>
+            </h5>
+            <div class="bg-light p-3 rounded shadow-sm">
+                <pre id="outputText" class="typing-effect">{{ output }}</pre>
             </div>
             {% endif %}
         </div>
     </div>
 
+    <!-- ✅ Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p class="mb-0">&copy; 2025 Kalistack. All Rights Reserved.</p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showLoading() {
+            document.getElementById("loading").style.display = "block";
+        }
+
+        function copyOutput() {
+            const text = document.getElementById("outputText").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("✅ Output copied to clipboard!");
+            });
+        }
+
+        // Auto-dismiss alerts after 5 seconds
+        document.addEventListener("DOMContentLoaded", () => {
+            const alerts = document.querySelectorAll(".alert");
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                    bsAlert.close();
+                }, 5000); // 5 seconds
+            });
+
+            // Typing effect for output
+            const el = document.getElementById("outputText");
+            if (el) {
+                const text = el.innerText;
+                el.innerText = "";
+                let i = 0;
+                const typing = setInterval(() => {
+                    if (i < text.length) {
+                        el.innerText += text.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(typing);
+                    }
+                }, 30);
+            }
+        });
+    </script>
 </body>
 </html>

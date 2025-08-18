@@ -1,0 +1,292 @@
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0d0d1c;
+      color: white;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      background-color: #0b0b1a;
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap; /* ✅ Added for mobile */
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    nav a {
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #6366f1;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid white;
+      color: white;
+    }
+
+    .btn-outline:hover {
+      background: white;
+      color: black;
+    }
+
+    .btn-primary {
+      background-color: white;
+      color: black;
+    }
+
+    .hero {
+      padding: 4rem 1.5rem;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(99, 102, 241, 0.05));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .hero-text {
+      max-width: 500px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .highlight {
+      color: #818cf8;
+      display: block;
+    }
+
+    .hero p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.125rem;
+      margin: 1rem 0 2rem;
+    }
+
+    .hero-buttons a {
+      display: inline-block;
+      margin-right: 1rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .hero-buttons .btn-primary {
+      background-color: #6366f1;
+      color: white;
+    }
+
+    .hero-buttons .btn-primary:hover {
+      background-color: #4f46e5;
+    }
+
+    .hero-buttons .btn-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    .hero-buttons .btn-secondary:hover {
+      background-color: white;
+      color: black;
+    }
+
+    .dashboard {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      position: relative;
+      z-index: 1;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .dashboard h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .dashboard .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .dashboard .stats div {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .chart {
+      margin-top: 1.5rem;
+      height: 8rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 0.25rem;
+    }
+
+    .chart div {
+      width: 0.5rem;
+      background-color: #818cf8;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .section {
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .section p {
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .feature:hover {
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @media(min-width: 1024px) {
+      .hero h1 {
+        font-size: 3.75rem;
+      }
+
+      .benefits {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .benefits-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .benefits-list div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .get-started-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+    }
+
+    .get-started-box a {
+      display: block;
+      margin: 0.75rem 0;
+      padding: 0.75rem 1.25rem;
+      font-weight: 600;
+      border-radius: 6px;
+    }
+
+    .get-started-box .btn-primary {
+      background-color: #6366f1;
+      color: white;
+    }
+
+    .get-started-box .btn-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    .get-started-box .btn-secondary:hover {
+      background-color: white;
+      color: black;
+    }
+
+    .placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* ✅ Additional responsive improvements */
+    @media (max-width: 768px) {
+      .hero-buttons a {
+        display: block;
+        margin-bottom: 1rem;
+        margin-right: 0;
+      }
+
+      .dashboard {
+        max-width: 100%;
+      }
+    }
+  </style>
